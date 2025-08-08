@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Special Login</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: pink;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .center-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    input[type="text"] {
+      padding: 12px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .emoji {
+      font-size: 100px;
+      cursor: pointer;
+      margin: 30px;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    .pink {
+      color: hotpink;
+    }
+
+    .blue {
+      color: dodgerblue;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px white;
+      }
+      to {
+        text-shadow: 0 0 20px white, 0 0 30px white;
+      }
+    }
+
+    .message, .final-message {
+      font-size: 24px;
+      color: white;
+      margin-top: 30px;
+    }
+
+    #nextBtn {
+      display: none;
+      margin-top: 20px;
+    }
+
+    /* Fireworks Animation */
+    .fireworks {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      background: transparent;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .firework {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      animation: explode 1s linear forwards;
+    }
+
+    @keyframes explode {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--x), var(--y)) scale(0.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="fireworks" id="fireworks"></div>
+
+  <div class="center-box" id="loginPage">
+    <h2>Enter Your Name</h2>
+    <input type="text" id="nameInput" placeholder="Enter name..." />
+    <br />
+    <button onclick="checkName()">Login</button>
+  </div>
+
+  <div class="center-box" id="emojiPage" style="display: none;">
+    <h2>Pick a Heart</h2>
+    <span class="emoji pink" onclick="showMessage('pink')">💖</span>
+    <span class="emoji blue" onclick="showMessage('blue')">💙</span>
+    <div class="message" id="message"></div>
+    <button id="nextBtn" onclick="showFinal()">Next</button>
+  </div>
+
+  <div class="center-box" id="finalPage" style="display: none;">
+    <div class="final-message">Thank You for Your Time. It Means a Lot.</div>
+  </div>
+
+  <script>
+    function checkName() {
+      const name = document.getElementById('nameInput').value.trim();
+      if (name.toLowerCase() === 'zarvesha') {
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('emojiPage').style.display = 'block';
+        launchFireworks();
+      } else {
+        alert("Only 'Zarvesha' is allowed.");
+      }
+    }
+
+    function showMessage(color) {
+      const messageDiv = document.getElementById('message');
+      if (color === 'pink') {
+        messageDiv.innerText = "You are the Best, Allah Tala aapko khush rakhay.";
+      } else {
+        messageDiv.innerText = "Thank You for your unconditional support.";
+      }
+      document.getElementById('nextBtn').style.display = 'inline-block';
+      launchFireworks();
+    }
+
+    function showFinal() {
+      document.getElementById('emojiPage').style.display = 'none';
+      document.getElementById('finalPage').style.display = 'block';
+      launchFireworks();
+    }
+
+    function launchFireworks() {
+      const container = document.getElementById('fireworks');
+      for (let i = 0; i < 40; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('firework');
+        dot.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        dot.style.left = Math.random() * 100 + 'vw';
+        dot.style.top = Math.random() * 100 + 'vh';
+        dot.style.setProperty('--x', (Math.random() - 0.5) * 200 + 'px');
+        dot.style.setProperty('--y', (Math.random() - 0.5) * 200 + 'px');
+        container.appendChild(dot);
+        setTimeout(() => dot.remove(), 1000);
+      }
+    }
+  </script>
+</body>
+</html>
